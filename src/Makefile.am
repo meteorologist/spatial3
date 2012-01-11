@@ -37,92 +37,11 @@ lib_LTLIBRARIES = libspatial3.la
 ## from each source file.  Note that it is not necessary to list header files
 ## which are already listed elsewhere in a _HEADERS variable assignment.
 libspatial3_la_SOURCES = \
-                       backend/headers/spatialite/gaiaexif.h \
-                       backend/headers/spatialite/gaiaaux.h \
-                       backend/headers/spatialite/gaiageo.h \
-                       backend/headers/spatialite/gg_const.h \
-                       backend/headers/spatialite/gg_structs.h \
-                       backend/headers/spatialite/gg_core.h \
-                       backend/headers/spatialite/gg_mbr.h \
-                       backend/headers/spatialite/gg_formats.h \
-                       backend/headers/spatialite/gg_dynamic.h \
-                       backend/headers/spatialite/gg_advanced.h \
-                       backend/headers/spatialite/sqlite3.h \
-                       backend/headers/spatialite/sqlite3ext.h \
-                       backend/headers/spatialite/spatialite.h \
-                       backend/headers/spatialite.h \
-                       backend/GeographicLib/Accumulator.hpp \
-                       backend/GeographicLib/AlbersEqualArea.hpp \
-                       backend/GeographicLib/AzimuthalEquidistant.hpp \
-                       backend/GeographicLib/CassiniSoldner.hpp \
-                       backend/GeographicLib/CircularEngine.hpp \
-                       backend/GeographicLib/Constants.hpp \
-                       backend/GeographicLib/DMS.hpp \
-                       backend/GeographicLib/EllipticFunction.hpp \
-                       backend/GeographicLib/GeoCoords.hpp \
-                       backend/GeographicLib/Geocentric.hpp \
-                       backend/GeographicLib/Geodesic.hpp \
-                       backend/GeographicLib/GeodesicLine.hpp \
-                       backend/GeographicLib/Geoid.hpp \
-                       backend/GeographicLib/Gnomonic.hpp \
-                       backend/GeographicLib/GravityCircle.hpp \
-                       backend/GeographicLib/GravityModel.hpp \
-                       backend/GeographicLib/LambertConformalConic.hpp \
-                       backend/GeographicLib/LocalCartesian.hpp \
-                       backend/GeographicLib/MGRS.hpp \
-                       backend/GeographicLib/MagneticCircle.hpp \
-                       backend/GeographicLib/MagneticModel.hpp \
-                       backend/GeographicLib/Math.hpp \
-                       backend/GeographicLib/NormalGravity.hpp \
-                       backend/GeographicLib/OSGB.hpp \
-                       backend/GeographicLib/PolarStereographic.hpp \
-                       backend/GeographicLib/PolygonArea.hpp \
-                       backend/GeographicLib/SphericalEngine.hpp \
-                       backend/GeographicLib/SphericalHarmonic.hpp \
-                       backend/GeographicLib/SphericalHarmonic1.hpp \
-                       backend/GeographicLib/SphericalHarmonic2.hpp \
-                       backend/GeographicLib/TransverseMercator.hpp \
-                       backend/GeographicLib/TransverseMercatorExact.hpp \
-                       backend/GeographicLib/UTMUPS.hpp \
-                       backend/GeographicLib/Utility.hpp \
-                       backend/GeographicLib/Config.h \
-                       backend/AlbersEqualArea.cpp \
-                       backend/AzimuthalEquidistant.cpp \
-                       backend/CassiniSoldner.cpp \
-                       backend/CircularEngine.cpp \
-                       backend/DMS.cpp \
-                       backend/EllipticFunction.cpp \
-                       backend/GeoCoords.cpp \
-                       backend/Geocentric.cpp \
-                       backend/Geodesic.cpp \
-                       backend/GeodesicLine.cpp \
-                       backend/Geoid.cpp \
-                       backend/Gnomonic.cpp \
-                       backend/GravityCircle.cpp \
-                       backend/GravityModel.cpp \
-                       backend/LambertConformalConic.cpp \
-                       backend/LocalCartesian.cpp \
-                       backend/MGRS.cpp \
-                       backend/MagneticCircle.cpp \
-                       backend/MagneticModel.cpp \
-                       backend/NormalGravity.cpp \
-                       backend/OSGB.cpp \
-                       backend/PolarStereographic.cpp \
-                       backend/PolygonArea.cpp \
-                       backend/SphericalEngine.cpp \
-                       backend/TransverseMercator.cpp \
-                       backend/TransverseMercatorExact.cpp \
-                       backend/UTMUPS.cpp \
-                       backend/Utility.cpp \
-                       backend/spatialite.c \
-                       backend/sqlite3.c \
-					   geometryimpl.hpp \
+                       geometryimpl.hpp \
                        coordinate.hpp \
-					   coordinate.cpp \
+                       coordinate.cpp \
                        geometry.hpp \
                        geometry.cpp \
-                       geometryd2.hpp \
-                       geometryd2.cpp \
                        geometryll.hpp \
                        geometryll.cpp \
                        region.hpp
@@ -153,7 +72,6 @@ spatial3_includedir = $(includedir)
 dist_spatial3_include_HEADERS = \
                               coordinate.hpp \
                               geometry.hpp   \
-                              geometryd2.hpp \
                               geometryll.hpp \
                               region.hpp
 
