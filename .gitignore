@@ -18,4 +18,6 @@ src/Makefile.in
 stamp-h1
 tests/Makefile
 tests/Makefile.in
-
+*.o
+*.la
+*.lo
