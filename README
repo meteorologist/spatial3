@@ -1,0 +1,45 @@
+spatial3 - geometry and spatila index library
+#===========================================
+
+Norwegian Meteorological Institute (met.no)
+Box 43 Blindern
+0313 OSLO
+NORWAY
+email: aleksandarb@met.no
+
+Contents:
+1. About spatial3
+2. Install
+
+#-------------------------------------------
+# 1. About spatial3
+#-------------------------------------------
+spatial3(tree) is created to support met.no needs with concepts like planar geometry together with coressponding algorithms and operations.
+spatial3 will keep its API as simple as possible, based on the actual user needs at the Norwegian Meteorological Institute.
+
+With that purpose in mind, the implementation of spatial3 will be based on GESO and SpatiaLite libraries. One can say that spatial3 is
+lighweight wrapper, simplified for met.no needs.
+
+Those backends are seen as implementation detail and could be easily swapped. SpatiLite will be used to temporary store the geometries and
+to provide efficient queries with it's spatial indexing capabilities.
+
+The plan is to swap-out GEOS with boost::geometry library. One of the reasons is that boost::geometry is only templates and might have some
+advanced functionality.
+
+Depends on:
+GEOS
+GEOS_C
+SQLLite and SpatiLite amalgam files
+
+#-------------------------------------------
+# 2. Install
+#-------------------------------------------
+./autogen.sh
+./configure
+
+or if libraries not in path and installation should be in local dir
+
+./configure --with-geos=.... --prefix=...
+make;
+make install
+
