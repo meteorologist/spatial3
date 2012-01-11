@@ -8,9 +8,11 @@
 //
 #include <geos/geom/Geometry.h>
 #include <geos/geom/Point.h>
+#include <geos/geom/MultiPoint.h>
 #include <geos/geom/LineString.h>
 #include <geos/geom/LinearRing.h>
 #include <geos/geom/Polygon.h>
+#include <geos/geom/MultiLineString.h>
 #include <geos/geom/MultiPolygon.h>
 #include <geos/geom/GeometryFactory.h>
 #include <geos/geom/PrecisionModel.h>
