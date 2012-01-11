@@ -18,6 +18,7 @@ src/Makefile.in
 stamp-h1
 tests/Makefile
 tests/Makefile.in
+src/.libs/
 *.o
 *.la
 *.lo
