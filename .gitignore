@@ -5,3 +5,5 @@ config.sub
 configure
 install-sh
 ltmain.sh
+config.h.in
+missing
