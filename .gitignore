@@ -7,3 +7,15 @@ install-sh
 ltmain.sh
 config.h.in
 missing
+Makefile
+Makefile.in
+config.h
+config.log
+config.status
+libtool
+src/Makefile
+src/Makefile.in
+stamp-h1
+tests/Makefile
+tests/Makefile.in
+
