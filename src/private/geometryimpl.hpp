@@ -3,6 +3,7 @@
 #define S3_GEOMETRY_IMPL_H_
 
 #include "coordinate.hpp"
+#include "envelopeimpl.hpp"
 
 // GEOC C++
 //
@@ -44,6 +45,15 @@ namespace metno { namespace s3 {
 
     template <int SRID>
     class MultiPointImpl;
+
+    template <int SRID>
+    class LineStringImpl;
+
+    template <int SRID>
+    class MultiLineStringImpl;
+
+    template <int SRID>
+    class LinearRingImpl;
 
     template <int SRID>
     class PolygonImpl;
@@ -790,90 +800,6 @@ namespace metno { namespace s3 {
     }
 
 // ## -------------------------------------------------------------------------------------------------------
-//     EnvelopeImpl
-// ## -------------------------------------------------------------------------------------------------------
-        class EnvelopeImpl {
-        public:
-            EnvelopeImpl()
-                : envelope_(new gg::Envelope())
-            {}
-            EnvelopeImpl(double x1, double x2, double y1, double y2)
-                : envelope_(new gg::Envelope(x1, x2, y1, y2))
-            {}
-
-            EnvelopeImpl(const Coordinate &p1, const Coordinate &p2)
-                : envelope_(new gg::Envelope(gg::Coordinate(p1.getX(), p1.getY()), gg::Coordinate(p2.getX(), p2.getY())))
-            {}
-
-            double getArea() const {
-                return envelope_->getArea();
-            }
-
-            double getMaxX() const {
-                return envelope_->getMaxX();
-            }
-
-            double getMaxY() const {
-                return envelope_->getMaxY();
-            }
-            double getMinX() const {
-                return envelope_->getMinX();
-            }
-
-            double getMinY() const {
-                return envelope_->getMinY();
-            }
-
-            std::string toString() const {
-                return envelope_->toString();
-            }
-
-            bool centre(Coordinate &centre) const {
-                gg::Coordinate ggC;
-                bool result = envelope_->centre(ggC);
-                centre.setX(ggC.x);
-                centre.setY(ggC.y);
-                return result;
-            }
-
-            void setToNull() {
-                envelope_->setToNull();
-            }
-
-            bool isNull() const {
-                return envelope_->isNull();
-            }
-
-            bool equals(const EnvelopeImpl *other) const {
-                return envelope_->equals(other->envelope_.get());
-            }
-
-            double getWidth() const {
-                return envelope_->getWidth();
-            }
-
-            double getHeight() const {
-                return envelope_->getHeight();
-            }
-
-            bool intersection(const EnvelopeImpl &env, EnvelopeImpl &result) const {
-                return envelope_->intersection(*env.envelope_, *result.envelope_);
-            }
-
-            bool intersects(EnvelopeImpl const* other) const {
-                return envelope_->intersects(other->envelope_.get());
-            }
-
-            bool intersects(Coordinate const& c) const {
-                return envelope_->intersects(gg::Coordinate(c.getX(), c.getY()));
-            }
-
-        protected:
-        private:
-            boost::shared_ptr<gg::Envelope> envelope_;
-        };
-
-// ## -------------------------------------------------------------------------------------------------------
 //     static GEOS related utilities
 // ## -------------------------------------------------------------------------------------------------------
     template <int SRID>
@@ -989,43 +915,6 @@ namespace metno { namespace s3 {
     public:
         GeometryCollectionImpl() {
              this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createGeometryCollection(), destroy);
-        }
-    };
-
-    template<int SRID>
-    class LineStringImpl : public GeometryImpl<SRID> {
-    public:
-        LineStringImpl() {
-            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createLineString());
-        }
-
-        LineStringImpl(gg::Geometry* geom) : GeometryImpl<SRID>(geom) { }
-
-        bool isRing()   const;
-        bool isClosed() const;
-
-        boost::shared_ptr<PointImpl<SRID> > getEndPoint() const;
-        boost::shared_ptr<PointImpl<SRID> > getStartPoint() const;
-
-//        boost::shared_ptr<Geometry> reverse();
-
-    protected:
-
-    };
-
-    template<int SRID>
-    class LinearRingImpl : public LineStringImpl<SRID> {
-    public:
-        LinearRingImpl() {
-            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createLinearRing());
-        }
-    };
-
-    template <int SRID>
-    class MultiLineStringImpl : public GeometryCollectionImpl<SRID> {
-    public:
-        MultiLineStringImpl() {
-            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createMultiLineString());
         }
     };
 
@@ -1454,40 +1343,6 @@ namespace metno { namespace s3 {
             boost::shared_ptr<GeometryImpl<SRID> > empty(new GeometryImpl<SRID>());
             return empty;
         }
-    }
-
-// ## -------------------------------------------------------------------------------------------------------
-//     LineStringImpl
-// ## -------------------------------------------------------------------------------------------------------
-
-    template <int SRID>
-    bool LineStringImpl<SRID>::isRing() const
-    {
-        gg::LineString* ls = dynamic_cast<gg::LineString*>(this->pGeometry_.get());
-        return ls->isRing();
-    }
-
-    template <int SRID>
-    bool LineStringImpl<SRID>::isClosed() const
-    {
-        gg::LineString* ls = dynamic_cast<gg::LineString*>(this->pGeometry_.get());
-        return ls->isClosed();
-    }
-
-    template <int SRID>
-    boost::shared_ptr<PointImpl<SRID> > LineStringImpl<SRID>::getEndPoint() const
-    {
-        gg::LineString* ls = dynamic_cast<gg::LineString*>(this->pGeometry_.get());
-        std::auto_ptr<gg::Point> end(ls->getEndPoint());
-        return boost::dynamic_pointer_cast<PointImpl<SRID> >(GeometryImpl<SRID>::createPoint(end->getX(), end->getY()));
-    }
-
-    template <int SRID>
-    boost::shared_ptr<PointImpl<SRID> > LineStringImpl<SRID>::getStartPoint() const
-    {
-        gg::LineString* ls = dynamic_cast<gg::LineString*>(this->pGeometry_.get());
-        std::auto_ptr<gg::Point> start(ls->getStartPoint());
-        return boost::dynamic_pointer_cast<PointImpl<SRID> >(GeometryImpl<SRID>::createPoint(start->getX(), start->getY()));
     }
 
 // ## -------------------------------------------------------------------------------------------------------

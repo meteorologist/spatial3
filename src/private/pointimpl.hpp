@@ -28,14 +28,6 @@
 //
 #include "geometryimpl.hpp"
 
-// GEOC C++
-//
-#include <geos/geom/Geometry.h>
-#include <geos/geom/GeometryFactory.h>
-// point related
-#include <geos/geom/Point.h>
-#include <geos/geom/MultiPoint.h>
-
 namespace gi = geos::io;
 namespace gg = geos::geom;
 

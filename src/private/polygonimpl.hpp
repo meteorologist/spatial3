@@ -28,17 +28,6 @@
 //
 #include "geometryimpl.hpp"
 
-// GEOC C++
-//
-#include <geos/geom/Geometry.h>
-#include <geos/geom/GeometryFactory.h>
-// polygon related
-#include <geos/geom/Polygon.h>
-#include <geos/geom/MultiPolygon.h>
-
-namespace gi = geos::io;
-namespace gg = geos::geom;
-
 namespace metno { namespace s3 {
 
     extern void destroy(gg::Geometry* g);

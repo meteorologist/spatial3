@@ -21,12 +21,27 @@
  * USA.
  */
 
-// private details
-// don't touch this
+#ifndef S3_LINEARRING_IMPL_H_
+#define S3_LINEARRING_IMPL_H_
+
+// implementation
 //
-#include "envelopeimpl.hpp"
 #include "geometryimpl.hpp"
-#include "pointimpl.hpp"
-#include "linestringimpl.hpp"
-#include "linearringimpl.hpp"
-#include "polygonimpl.hpp"
+
+namespace metno { namespace s3 {
+
+    extern void destroy(gg::Geometry* g);
+
+    // ## -------------------------------------------------------------------------------------------------------
+    //     LinearRingImpl
+    // ## -------------------------------------------------------------------------------------------------------
+    template<int SRID>
+    class LinearRingImpl : public LineStringImpl<SRID> {
+    public:
+        LinearRingImpl() {
+            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createLinearRing());
+        }
+    };
+} }
+
+#endif // S3_LINEARRING_IMPL_H_
