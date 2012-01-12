@@ -33,16 +33,22 @@
 #include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace gg = geos::geom;
 namespace gi = geos::io;
+namespace gg = geos::geom;
 namespace go = geos::operation;
 
 namespace metno { namespace s3 {
 
+    template <int SRID>
+    class PointImpl;
+
+    template <int SRID>
+    class MultiPointImpl;
+
 // ## -------------------------------------------------------------------------------------------------------
 //     static GEOS related utilities
 // ## -------------------------------------------------------------------------------------------------------
-    static void destroy(gg::Geometry* g)
+    void destroy(gg::Geometry* g)
     {
         if(!g) return;
 
@@ -981,24 +987,6 @@ namespace metno { namespace s3 {
     };
 
     template<int SRID>
-    class PointImpl : virtual public GeometryImpl<SRID> {
-    public:
-
-        PointImpl() {
-            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createPoint(), destroy);
-        }
-        ~PointImpl() { }
-
-        double getX();
-        double getY();
-        void   setX(double x);
-        void   setY(double y);
-
-    private:
-
-    };
-
-    template<int SRID>
     class LineStringImpl : public GeometryImpl<SRID> {
     public:
         LineStringImpl() {
@@ -1052,14 +1040,6 @@ namespace metno { namespace s3 {
 
         boost::shared_ptr<GeometryImpl<SRID> > makeValid() const;
         boost::shared_ptr<GeometryImpl<SRID> > cleanGeometry() const;
-    };
-
-    template <int SRID>
-    class MultiPointImpl : public GeometryCollectionImpl<SRID> {
-    public:
-        MultiPointImpl() {
-            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createMultiPoint());
-        }
     };
 
     template <int SRID>
@@ -1496,43 +1476,6 @@ namespace metno { namespace s3 {
             boost::shared_ptr<GeometryImpl<SRID> > empty(new GeometryImpl<SRID>());
             return empty;
         }
-    }
-
-
-// ## -------------------------------------------------------------------------------------------------------
-//     PointImpl
-// ## -------------------------------------------------------------------------------------------------------
-
-    template <int SRID>
-    double PointImpl<SRID>::getX()
-    {
-        if(this->pGeometry_->isEmpty())
-            return std::numeric_limits<double>::quiet_NaN();
-        gg::Point* pt = dynamic_cast<gg::Point*>(this->pGeometry_.get());
-        return pt->getX();
-    }
-
-    template <int SRID>
-    double PointImpl<SRID>::getY()
-    {
-        if(this->pGeometry_->isEmpty())
-            return std::numeric_limits<double>::quiet_NaN();
-        gg::Point* pt = dynamic_cast<gg::Point*>(this->pGeometry_.get());
-        return pt->getY();
-    }
-
-    template <int SRID>
-    void PointImpl<SRID>::setX(double newx)
-    {
-        double oldy = getY();
-        this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createPoint(gg::Coordinate(newx, oldy)));
-    }
-
-    template <int SRID>
-    void PointImpl<SRID>::setY(double newy)
-    {
-        double oldx = getX();
-        this->pGeometry_ = boost::shared_ptr<gg::Point>(this->pFactory_->createPoint(gg::Coordinate(oldx, newy)));
     }
 
 // ## -------------------------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 #include "geometryll.hpp"
-#include "geometryimpl.hpp"
+#include "private/geometry.hpp"
 
 // SPATIALITE AMALGAMATION
 //

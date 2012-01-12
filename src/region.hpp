@@ -1,9 +1,5 @@
-
 #ifndef S3_REGION_TEMPLATE_H_
 #define S3_REGION_TEMPLATE_H_
-
-#include "geometry.hpp"
-
 
 // BOOST
 //
@@ -47,7 +43,6 @@ namespace metno { namespace s3 {
         int id_;
         std::string name_;
         boost::shared_ptr<GeometryType> pGeometry_;
-        boost::shared_ptr<GeometryFactory> pFactory_;
     };
 
     template <typename GeometryType>
@@ -144,10 +139,9 @@ namespace metno { namespace s3 {
     template <typename GeometryType>
     bool Region<GeometryType>::isInside(Coordinate const& c, int tolerance) const
     {
-        assert(pFactory_.get());
         if(pGeometry_.get()) {
             boost::shared_ptr<GeometryType> buffer = boost::dynamic_pointer_cast<GeometryType>(pGeometry_->Buffer(tolerance));
-            boost::shared_ptr<GeometryType> point  = boost::dynamic_pointer_cast<GeometryType>(pFactory_->createPoint(c.getX(), c.getY()));
+            boost::shared_ptr<GeometryType> point  = boost::dynamic_pointer_cast<GeometryType>(pGeometry_->getFactory()->createPoint(c.getX(), c.getY()));
             return buffer->coveredBy(point);
         }
         return false;
@@ -156,7 +150,6 @@ namespace metno { namespace s3 {
     template <typename GeometryType>
     bool Region<GeometryType>::isInside(Region<GeometryType> const& r, int tolerance) const
     {
-        assert(pFactory_.get());
         if(pGeometry_.get()) {
             boost::shared_ptr<GeometryType> buffer = boost::dynamic_pointer_cast<GeometryType>(pGeometry_->Buffer(tolerance));
             return buffer->coveredBy(r.pGeometry_);

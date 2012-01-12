@@ -1,8 +1,7 @@
 #include <cstdio>
 #include <iostream>
 
-#include "../src/geometryimpl.hpp"
-#include "../src/geometry.hpp"
+#include "../src/private/geometry.hpp"
 #include "../src/coordinate.hpp"
 #include "../src/geometryll.hpp"
 #include "../src/region.hpp"
