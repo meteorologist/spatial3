@@ -45,6 +45,12 @@ namespace metno { namespace s3 {
     template <int SRID>
     class MultiPointImpl;
 
+    template <int SRID>
+    class PolygonImpl;
+
+    template <int SRID>
+    class MultiPolygonImpl;
+
 // ## -------------------------------------------------------------------------------------------------------
 //     static GEOS related utilities
 // ## -------------------------------------------------------------------------------------------------------
@@ -1015,33 +1021,6 @@ namespace metno { namespace s3 {
         }
     };
 
-    template<int SRID>
-    class PolygonImpl : public GeometryImpl<SRID> {
-    public:
-        PolygonImpl() {
-            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createPolygon());
-        }
-
-        boost::shared_ptr<GeometryImpl<SRID> > getExteriorRing();
-
-        // advanced functionality
-        boost::shared_ptr<GeometryImpl<SRID> > makeValid() const;
-        boost::shared_ptr<GeometryImpl<SRID> > cleanGeometry() const;
-    protected:
-
-    };
-
-    template <int SRID>
-    class MultiPolygonImpl : public GeometryCollectionImpl<SRID> {
-    public:
-        MultiPolygonImpl() {
-            this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createMultiPolygon());
-        }
-
-        boost::shared_ptr<GeometryImpl<SRID> > makeValid() const;
-        boost::shared_ptr<GeometryImpl<SRID> > cleanGeometry() const;
-    };
-
     template <int SRID>
     class MultiLineStringImpl : public GeometryCollectionImpl<SRID> {
     public:
@@ -1049,7 +1028,6 @@ namespace metno { namespace s3 {
             this->pGeometry_ = boost::shared_ptr<gg::Geometry>(this->pFactory_->createMultiLineString());
         }
     };
-
 
     template <int SRID>
     boost::shared_ptr<gg::PrecisionModel> GeometryImpl<SRID>::pPM_(new gg::PrecisionModel());
@@ -1510,80 +1488,6 @@ namespace metno { namespace s3 {
         gg::LineString* ls = dynamic_cast<gg::LineString*>(this->pGeometry_.get());
         std::auto_ptr<gg::Point> start(ls->getStartPoint());
         return boost::dynamic_pointer_cast<PointImpl<SRID> >(GeometryImpl<SRID>::createPoint(start->getX(), start->getY()));
-    }
-
-
-// ## -------------------------------------------------------------------------------------------------------
-//     PolygonImpl
-// ## -------------------------------------------------------------------------------------------------------
-
-    template <int SRID>
-    boost::shared_ptr<GeometryImpl<SRID> > PolygonImpl<SRID>::getExteriorRing()
-    {
-        boost::shared_ptr<GeometryImpl<SRID> > empty(new LineStringImpl<SRID>());
-        if(!this->pGeometry_.get() || this->pGeometry_->isEmpty())
-            return empty;
-
-        gg::Polygon* ggPolygon = dynamic_cast<gg::Polygon*>(this->pGeometry_.get());
-        if(!ggPolygon)
-            return empty;
-
-        const gg::LineString* ggShell = ggPolygon->getExteriorRing();
-        gg::CoordinateSequence* seq(ggShell->getCoordinates());
-        gg::Geometry* gg = this->pFactory_->createLineString(seq);
-        boost::shared_ptr<GeometryImpl<SRID> > ls(new LineStringImpl<SRID>(gg));
-        return ls;
-    }
-
-    template <int SRID>
-    boost::shared_ptr<GeometryImpl<SRID> > PolygonImpl<SRID>::makeValid() const
-    {
-        std::cerr<<"["<<__FILE__<<"]"<<__FUNCTION__<<"@"<<__LINE__<<" CHECK " <<std::endl;
-        gg::Geometry* friendly = make_geos_friendly_polygon(this->pGeometry_.get());
-        gg::Geometry* valid = make_valid_polygon(friendly);
-//        gg::Geometry* valid = make_valid_polygon_by_buffering_offending_point(friendly);
-
-        destroy(friendly);
-
-        return GeometryImpl<SRID>::fromRaw(valid);
-    }
-
-    template <int SRID>
-    boost::shared_ptr<GeometryImpl<SRID> > PolygonImpl<SRID>::cleanGeometry() const
-    {
-        std::cerr<<"["<<__FILE__<<"]"<<__FUNCTION__<<"@"<<__LINE__<<" CHECK " <<std::endl;
-        gg::Geometry* friendly = make_geos_friendly_polygon(this->pGeometry_.get());
-        gg::Geometry* valid = make_clean_polygon(friendly);
-        destroy(friendly);
-
-        return GeometryImpl<SRID>::fromRaw(valid);
-    }
-
-    // ## -------------------------------------------------------------------------------------------------------
-    //     MultiPolygonImpl
-    // ## -------------------------------------------------------------------------------------------------------
-
-    template <int SRID>
-    boost::shared_ptr<GeometryImpl<SRID> > MultiPolygonImpl<SRID>::makeValid() const
-    {
-        std::cerr<<"["<<__FILE__<<"]"<<__FUNCTION__<<"@"<<__LINE__<<" CHECK " <<std::endl;
-        gg::Geometry* friendly = make_geos_friendly_polygon(this->pGeometry_.get());
-        gg::Geometry* valid = make_valid_polygon(friendly);
-
-        destroy(friendly);
-
-        return GeometryImpl<SRID>::fromRaw(valid);
-    }
-
-    template <int SRID>
-    boost::shared_ptr<GeometryImpl<SRID> > MultiPolygonImpl<SRID>::cleanGeometry() const
-    {
-        std::cerr<<"["<<__FILE__<<"]"<<__FUNCTION__<<"@"<<__LINE__<<" CHECK " <<std::endl;
-        gg::Geometry* friendly = make_geos_friendly_polygon(this->pGeometry_.get());
-        gg::Geometry* valid = make_clean_polygon(friendly);
-        destroy(friendly);
-
-        return GeometryImpl<SRID>::fromRaw(valid);
     }
 
 // ## -------------------------------------------------------------------------------------------------------

@@ -26,3 +26,4 @@
 //
 #include "geometryimpl.hpp"
 #include "pointimpl.hpp"
+#include "polygonimpl.hpp"
