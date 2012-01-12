@@ -3,9 +3,9 @@
 
 // SPATIALITE AMALGAMATION
 //
-#include <spatialite/sqlite3.h>
-#include <spatialite/gaiageo.h>
-#include <spatialite.h>
+//#include <spatialite/sqlite3.h>
+//#include <spatialite/gaiageo.h>
+//#include <spatialite.h>
 
 // GraphicLib - temporary helpers
 //
@@ -417,7 +417,7 @@ void PointLL::setLat(double newlat)
 // ## -------------------------------------------------------------------------------------------------------
 //     SpatialDBInMemory
 // ## -------------------------------------------------------------------------------------------------------
-
+#ifdef SPATIALITE_ENABLED
     class SpatialDBInMemory {
     public:
         SpatialDBInMemory(std::string const& dbname);
@@ -507,7 +507,7 @@ void PointLL::setLat(double newlat)
         sqlite3_reset_auto_extension();
 //        std::cerr<<"["<<__FILE__<<"]"<<__FUNCTION__<<"@"<<__LINE__<<" CHECK POINT "<<std::endl;
     }
-
+#endif // SPATIALITE_ENABLED
 //   boost::shared_ptr<Geometry> GeometryFactoryLL::createLinearRing(std::vector<Coordinate>& coordinates)
 //   {
 //       boost::shared_ptr<LineStringLL> ls(new LineStringLL());

@@ -47,11 +47,11 @@ libspatial3_la_SOURCES = \
                        region.hpp
 
 libspatial3_la_CPPFLAGS = \
-                        ${spatialite_INCLUDEPATHS} \
-                        ${geographiclib_INCLUDEPATHS} \
+##                        ${spatialite_INCLUDEPATHS} \
+##                        ${geographiclib_INCLUDEPATHS} \
                         ${GEOS_CPPFLAGS} \
-                        ${PROJ_CPPFLAGS} \
-                        ${spatialite_CPPFLAGS}
+                        ${PROJ_CPPFLAGS} 
+##                        ${spatialite_CPPFLAGS}
                         
 
 
