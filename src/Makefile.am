@@ -37,11 +37,9 @@ lib_LTLIBRARIES = libspatial3.la
 ## from each source file.  Note that it is not necessary to list header files
 ## which are already listed elsewhere in a _HEADERS variable assignment.
 libspatial3_la_SOURCES = \
-                       geometryimpl.hpp \
+                       private/geometryimpl.hpp \
                        coordinate.hpp \
                        coordinate.cpp \
-                       geometry.hpp \
-                       geometry.cpp \
                        geometryll.hpp \
                        geometryll.cpp \
                        region.hpp
