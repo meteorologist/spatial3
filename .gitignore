@@ -21,6 +21,7 @@ tests/Makefile.in
 src/.libs/
 tests/.libs/
 tests/simpletest
+config.h.in~
 *.o
 *.la
 *.lo
