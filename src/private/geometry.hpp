@@ -30,3 +30,4 @@
 #include "linestringimpl.hpp"
 #include "linearringimpl.hpp"
 #include "polygonimpl.hpp"
+#include "utils.hpp"
