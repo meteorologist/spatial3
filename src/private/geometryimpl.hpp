@@ -86,17 +86,7 @@ namespace metno { namespace s3 {
     extern void destroy(gg::Geometry* g);
 
     // caller must take ownership of returned geometry
-    extern gg::Geometry* add_point_linestring(gg::Geometry const* g, gg::Coordinate c);
-    extern gg::Geometry* close2d_ring(gg::Geometry const* g);
-    extern gg::Geometry* make_geos_friendly_ring(gg::Geometry const* r);
     extern gg::Geometry* make_geos_friendly_polygon(gg::Geometry* p);
-    extern gg::Geometry* node_lines(gg::Geometry const* lines);
-    extern gg::Geometry* extract_unique_points(gg::Geometry const* g);
-
-    extern gg::Geometry* polygonize(const gg::Geometry* const* vgeoms, size_t ngeoms);
-    extern gg::Geometry* build_area(gg::Geometry const* geom_in);
-    extern gg::Geometry* make_valid_polygon(gg::Geometry const* p);
-    extern gg::Geometry* make_clean_polygon(gg::Geometry const* poly_in);
     extern gg::Geometry* polygon_split_by_line(const gg::Geometry* polygon, const gg::Geometry* line);
     extern gg::Geometry* collection_split_by_line(const gg::Geometry* coll_in, const gg::Geometry* blade_in);
 

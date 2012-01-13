@@ -31,7 +31,8 @@
 namespace metno { namespace s3 {
 
     extern void destroy(gg::Geometry* g);
-
+    extern gg::Geometry* make_valid_polygon(gg::Geometry const* p);
+    extern gg::Geometry* make_clean_polygon(gg::Geometry const* poly_in);
     // ## -------------------------------------------------------------------------------------------------------
     //     PolygonImpl
     // ## -------------------------------------------------------------------------------------------------------

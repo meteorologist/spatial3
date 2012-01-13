@@ -38,6 +38,8 @@ lib_LTLIBRARIES = libspatial3.la
 ## which are already listed elsewhere in a _HEADERS variable assignment.
 libspatial3_la_SOURCES = \
                        private/geometry.hpp \
+					   envelope.hpp \
+					   envelope.cpp \
                        coordinate.hpp \
                        coordinate.cpp \
                        geometryll.hpp \
@@ -68,6 +70,7 @@ libspatial3_la_LDFLAGS = \
 ## source tree matches the hierarchy at the install location, however.
 spatial3_includedir = $(includedir)
 dist_spatial3_include_HEADERS = \
+                              envelope.hpp \
                               coordinate.hpp \
                               geometryll.hpp \
                               region.hpp

@@ -22,24 +22,6 @@ namespace metno { namespace s3 {
 
     const int SRID_WGS84 = 4362;
 
-    class Envelope {
-    public:
-        Envelope();
-        Envelope(double x1, double x2, double y1, double y2);
-        Envelope(const Coordinate &p1, const Coordinate &p2);
-
-        double getArea() const;
-        double getMaxX() const;
-        double getMaxY() const;
-        double getMinX() const;
-        double getMinY() const;
-        bool equals(const Envelope *other) const;
-        std::string toString() const;
-
-    private:
-        boost::shared_ptr<EnvelopeImpl> pImpl_;
-    };
-
     class GeometryLL {
     public:
         GeometryLL();

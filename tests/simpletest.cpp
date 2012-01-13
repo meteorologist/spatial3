@@ -3,6 +3,7 @@
 
 #include "../src/private/geometry.hpp"
 #include "../src/coordinate.hpp"
+#include "../src/envelope.hpp"
 #include "../src/geometryll.hpp"
 #include "../src/region.hpp"
 
